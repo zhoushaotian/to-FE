@@ -33,7 +33,7 @@ computed: {
 --- 
 ## 看板池首页的store  
 ### 首页header组件    
-1. data：待选所有个人看板数据(待选搜索数据)[Object]  
+1. data：待选所有**个人看板数据**(待选搜索数据)[Object]  
 2. methods:   
 addBoardPoor:增加看板池按钮的handle  
 link：导出报表连接的handle  
@@ -42,14 +42,14 @@ createFilter： 返回一个过滤器函数
 handleSelect： 搜索况待选项选中时触发的回调  
 3. 生命周期钩子  
 mounted: 请求所有看板数据 
---- 
  
 ### 首页看板组件  
 1. data:  
 addBoardFlag: 新增看板对话框的显示标志  
-boardStdTemplate：新增看板对话框的标准模板数据 boardDiyTemplate： 新增看板对话框的自定义模板数据  
+boardStdTemplate：新增看板对话框的**标准模板数据**  
+boardDiyTemplate： 新增看板对话框的**自定义模板数据**  
 addBoardOptions： 新增看板的表单数据包含模板ID、新增看板名、审核ID  
-personalBoard: 新增自定义模板的所有个人看板数据  
+personalBoard: 新增自定义模板的所有**个人看板数据**  
 addTemplateOption: 新增自定义模板的options数据对象  
 2. props:  
 name: 看板名  
@@ -72,11 +72,13 @@ showFlag: 看板池收起标志
 icon: 看板池的图标  
 name: 看板池名  
 boardList: 该看板池的所有看板 [object]  
-## 看板池页面  
+---
+### 看板池页面  
 1. data:  
-oldBoard: 已归档看板 [Object]  
+oldBoard: 已**归档看板** [Object]  
 watchOptions: 查看已归档看板时候的选项  
-watchOldBoard： 查看已归档看板对话框的显示标志 boardPoorList: 个人所见所有看板池数据 [Object]  
+watchOldBoard： 查看已归档看板对话框的显示标志  
+boardPoorList: 个人所见所有**看板池数据** [Object]  
 2. components:
 boardHeader
 poor  
@@ -87,7 +89,7 @@ handleTime： 时间选择的回调
 ### 导出报表页面  
 1. data:  
 options: 卡片筛选选项  
-boardList：个人所见所有看板数据 [object]  
+boardList：个人所见**所有看板数据** [object]  
 2. methods：  
 handleTime:时间选择处理  
 handleExportExcel:导出报表处理  
