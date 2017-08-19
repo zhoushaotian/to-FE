@@ -30,10 +30,73 @@ Promise.all()方法可以将多个Promise实例包装成一个实例，这个实
 3. aplication/json  
 body里的数据是序列化之后的json字符串，json字符串支持比键值对复杂的结构化数据。
 # 第二周  
-## js中如何进行对象的深复制  
+## js中如何进行对象的深复制&&如何判断变量类型  
+```javascript
+//对于一个普通的数组，用splice就可以复制。例如:
+let arr = [1,2,3];
+let arr2 = arr.slice();
+//注意 这种方法只能复制 数组元素是 原始数据类型的数组(String、Number、Boolean)
+//如果一个对象有多层嵌套，例如：
+let obj = [
+    {
+        a:1,
+        b:2
+    },
+    {
+        a:3,
+        b:4
+    }
+];
+//这个时候就需要进行对象的深复制了。由于是嵌套对象，首先想到的肯定是利用递归
+function deepCopy(source,target) {
+    target = target || {};
+    for(let i in source) { 
+       if(typeof source[i] === 'object') {
+           if(source[i] === null){
+               target[i] = null; 
+           }else {
+               if(source[i].constructor === Object) {
+                   target[i] = {};
+               } else {
+                   target[i] = [];
+               }
+               deepCopy(source[i], target[i]);
+           }
+       }else {
+           target[i] = source[i];
+       }
+    }
+    return target;
+}
+//或者借助JSON，但是它能正确处理的是能够被JSON直接表示的数据结构:
+function jsonClone(obj) {
+    return JSON.parse(JSON.stringify(obj));
+}
+```
+对于变量的类型判断：  
+1. 利用typeof返回一个变量的类型，但是对于数组和对象无法判断，都是返回'object'
+2. instanceof 测试一个对象的原型链中是否存在一个构造函数的prototype属性： obj instanceof constructor 例如  [] instanceof Array 返回 true []instanceof Obejct 也会返回true  
+3. 利用toString方法：在JS中由于每个对象都继承自Object所以都会有一个toString方法，在Object构造函数的原型对象上的toString方法会返回一个字符串"[object type]"，type表示了调用该方法的对象的类型。   
+```javascript
+function isType(type) {
+    return function(obj) {
+        if(toString.call(obj) === `[object ${type}]`) return true
+        return false;
+    };
+}
+```
+上面这个函数是一个工厂函数，根据传入的type值可以产生判断不同变量类型的函数。是一种偏函数的用法(传入不同的参数值 调用相同函数 产生部分参数值已经固定的函数 不同函数 的函数)。例如:  
+```javascript
+let isArray = isType('Array');
+isArray([]); //true
+let isObject = isType('Object');
+isObject({}); //return true
+isObject([]); //return false
+```  
+注意：只有Object原型对象上的toString方法才会返回表示对象类型的字符串。
 ## 对中文名的排序  
 ## 页面需要用到的权限信息如何在node层传出  
 ## TCP协议  
 ## 再探HTTP  
-## webpack 配置sourcemap
+## webpack 各项配置
 
