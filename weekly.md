@@ -95,8 +95,13 @@ isObject([]); //return false
 ```  
 注意：只有Object原型对象上的toString方法才会返回表示对象类型的字符串。
 ## 对中文名的排序  
+-  localeCompare函数  
+用法: referenceStr.localeCompare(compareStr, locales).其中compareStr是待比较的字符串,locales参数指定了要比较的语言。例如'zh','de','sv'.函数会根据指定的语言比较两个字符串，当引用字符串在比较字符串前面时则返回负值，在后面则返回正值，顺序相同返回0.
 ## 页面需要用到的权限信息如何在node层传出  
+通常页面路由的时候，根据权限的设定，在res.render的时候向模板传递一个字段表示该用户的权限信息，然后在模板中将这个字段绑定到一个dom对象中，这样页面渲染完成之后就可以通过dom的这个自定义属性在前端拿到该用户的权限信息。
 ## TCP协议  
+
 ## 再探HTTP  
-## webpack 各项配置
+
+## webpack 各项配置  
 
