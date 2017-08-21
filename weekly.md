@@ -30,10 +30,20 @@ Promise.all()方法可以将多个Promise实例包装成一个实例，这个实
 3. aplication/json  
 body里的数据是序列化之后的json字符串，json字符串支持比键值对复杂的结构化数据。
 # 第二周  
+## 用偏函数判断类型  
+```javascript
+function isType(type) {
+    return function(obj,type){
+        if(toString.call(obj)==='[object type]')return true
+        return false
+    }
+}
+```
 ## js中如何进行对象的深复制  
 ## 对中文名的排序  
 ## 页面需要用到的权限信息如何在node层传出  
 ## TCP协议  
 ## 再探HTTP  
-## webpack 配置sourcemap
+## webpack 配置sourcemap  
+## node process对象
 
