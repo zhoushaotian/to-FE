@@ -103,5 +103,9 @@ isObject([]); //return false
 
 ## 再探HTTP  
 ## webpack 配置sourcemap  
-## node process对象
+## node process对象   
+# 第三周  
+## Vue响应式原理  
+## 虚拟dom  
+## webpack基本原理
 
