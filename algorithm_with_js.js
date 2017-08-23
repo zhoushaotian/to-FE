@@ -13,7 +13,8 @@ function quickSort(arr){
     let right = [];
     //选择本次排序的基准元素
     let midIndex = Math.floor(arr.length/2);
-    let mid = arr.splice(midIndex, 1)[0]; //基准元素不参与此次排序，只用作比较 ?为什么要跳过基准元素
+    let mid = arr.splice(midIndex, 1)[0]; //基准元素不参与此次排序，只用作比较，这里必须跳过基准元素，不然得到的数组很有可能会产生死递归
+                                          //考虑[1,2]基准元素为1.
     //开始计算左右数组
     for(let i = 0; i < arr.length; i++) {
         if(arr[i] <= mid) {
