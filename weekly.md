@@ -108,4 +108,4 @@ isObject([]); //return false
 ## Vue响应式原理  
 ## 虚拟dom  
 ## webpack基本原理
-
+## commonJS、AMD、CMD、es6模块规范
