@@ -106,6 +106,34 @@ isObject([]); //return false
 ## node process对象   
 # 第三周  
 ## Vue响应式原理  
+1. Vue如何追踪每个属性的变化  
+Vue实例在初始化的时候，会把data对象里面的每个属性通过Object.defineProperty转换成getter和setter。关于Object.defineProperty:
+Object.defineProperty可以定义或者修改一个对象上的属性，并返回这个对象。defineProperty与直接添加一个属性不同的是，他可以指定这个属性的描述符。一个属性的描述符分为两种，一种是数据描述符，另外一种是存取描述符。defineProperty指定的描述符只能是其中一种。两种描述符都具有以下属性:  
+- configurable: 当且仅当这个描述符为true的时候这个对象的属性描述符才能被改变，该属性也能从对象中删除，默认为false  
+- enumerable： 决定这个属性是否可以枚举，默认为false  
+- value: 属性对应的值 默认是undefined  
+- writable：当且仅当该属性的 writable为true时，该属性才能被赋值运算符改变。 默认为false  
+存取描述符还有以下属性:  
+-get: 一个给属性提供 getter 的方法，如果没有 getter 则为 undefined。该方法返回值被用作属性值。默认为 undefined。  
+-set: 一个给属性提供 setter 的方法，如果没有 setter 则为 undefined。该方法将接受唯一参数，并将该参数的新值分配给该属性。默认为 undefined。  
+Vue通过getter和setter来追踪依赖，在属性被访问和被修改的时候通知变化。  
+2. 变化检测  
+每个Vue实例都有一个watcher对象，在组件渲染的过程中把属性记录为依赖，当属性的setter被调用的时候，会通知watcher重新计算，从而使组件更新。这也是为什么Vue不允许动态添加根级响应式属性的原因，因为在实例化的时候就已经把所有属性转化成getter与setter了，之后添加的根级属性不是响应式的。不过可以调用Vue.set方法来添加一个新的属性。另外，如果向已经存在的对象添加一个属性，例如:
+```JavaScript
+new Vue({
+    data: {
+        a: 1,
+        b: {
+            c: 1
+        }
+    }
+})
+```  
+向对象b添加一个新属性不会触发更新，这个时候可以使用Object.assign方法创建一个新的对象包含已有对象的属性和新添加的属性然后再赋值给b。  
+3. 异步更新队列  
+在Vue中dom的更新是异步的，也就是说，当你改变一个响应式的属性值的时候，Vue不会马上去更新dom，而是将这个改变事件推入一个队列中，缓冲在同一次事件循环中发生的所有数据改变(例如一个属性值多次被改变，那么只会取最后一次改变的结果)，如果在一次事件循环里有同一个watcher多次被触发，那么只会一次推入到队列中。然后在下一次事件循环中，Vue刷新这个队列，并执行实际需要改变的操作。  
+如果你需要在dom更新之后执行一些操作。例如：一个函数依赖于dom的一些属性才能正常运行。当你改变一个数据的时候，dom不会马上更新，也就是说这个函数拿到的dom属性不是改变之后的，这个时候，你需要用到Vue.nextTick(callback)，这个函数会在dom更新之后执行参数中的回调，并且回调中的this自动绑定到当前vue实例上。  
+
 ## webpack基本原理
 ## commonJS、AMD、CMD、es6模块规范
 ## 虚拟dom与diff算法  
