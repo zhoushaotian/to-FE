@@ -181,7 +181,7 @@ require.config({
         "amodule": 'amodule'
     }
 })  
-
+```
 --- 
 - 同步加载： commonJS
 ## 虚拟dom与diff算法  
