@@ -135,7 +135,55 @@ new Vue({
 如果你需要在dom更新之后执行一些操作。例如：一个函数依赖于dom的一些属性才能正常运行。当你改变一个数据的时候，dom不会马上更新，也就是说这个函数拿到的dom属性不是改变之后的，这个时候，你需要用到Vue.nextTick(callback)，这个函数会在dom更新之后执行参数中的回调，并且回调中的this自动绑定到当前vue实例上。  
 
 ## webpack基本原理
-## commonJS、AMD、CMD、es6模块规范
+## commonJS、AMD、CMD、es6模块规范  
+- 异步加载： AMD、CMD  
+AMD、CMD与commonJS的最大区别在于前者是异步加载，后者为同步加载. 
+--- 
+1. AMD  
+- 使用AMD定义一个模块:  
+```javascript
+//定义一个math模块，AMD规定一个JS文件就是
+//math.js  
+define(['a'], function(a){
+    function add(){
+        a.one();
+    }
+    return {
+        add
+    }
+});
+```  
+define函数的第一个参数是定义模块所依赖的其他模块。第二个参数是回调函数，在依赖模块加载完成之后会执行这个函数，回调函数返回的对象是导出的接口。  
+- 模块的加载  
+使用require函数加载其他模块，需要再之前引入requirejs：  
+```html
+<script src="js/require.js"></script>  
+<script src="js/main"></script>
+```  
+main.js是自己代码的入口文件称为主模块,所有的代码都从这里开始运行。  
+```javascript
+// main.js
+require(['aModule','bModule'], function(a,b){
+    // your code
+})
+```  
+require函数也接收两个参数,第一个参数是代码依赖的所有模块，第二个参数是回调函数，当所有模块加载完成之后会执行这个回调函数。加载的模块会以参数的形式传入回调函数.默认情况下，加载的模块都被认为是和main.js在一个目录下。如果要加载其他目录的模块，可以在开头使用require.config配置  
+```javascript
+require.config({
+    path: {
+        "amodule": 'src/amodule'
+    }
+});
+//或者直接改变基准目录
+require.config({
+    baseUrl: 'src/',
+    path: {
+        "amodule": 'amodule'
+    }
+})  
+
+--- 
+- 同步加载： commonJS
 ## 虚拟dom与diff算法  
 ## 详解JavaScript单线程与事件循环（浏览器环境与node环境）
 JavaScript一开始设计的时候只是浏览器端的脚本，只有一些dom的相关操作不需要复杂的数据处理，所以没有涉及多线程的概念，倘若加入了多线程，当线程a改变了dom的数据，线程b也改变了dom的数据，那么还需要考虑线程之间的通信与线程锁，无疑让语言变得更复杂。而且ECMA中也没有提到线程的概念。  
