@@ -181,7 +181,9 @@ require.config({
         "amodule": 'amodule'
     }
 })  
-```
+```  
+2. CMD  
+seajs实现了CMD规范，与AMD一样,CMD也是异步加载依赖模块，区别在于AMD是在一开始就异步加载所有依赖模块，而CMD是按需异步加载。
 --- 
 - 同步加载： commonJS
 ## 虚拟dom与diff算法  
@@ -202,5 +204,9 @@ js的执行进程(主进程)其实就是一个事件循环(eventloop)的进程�
 
 
 ## 初入React  
-## XHR对象
+## XHR对象  
+# 第四周  
+## Webpack的HMR浅析  
+## gulp入门  
+## html5API
 
