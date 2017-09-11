@@ -204,11 +204,102 @@ js的执行进程(主进程)其实就是一个事件循环(eventloop)的进程�
 
 
 ## 初入React  
+- 什么是JSX  
+JSX实现了JS与HTML混写，例如:  
+```javascript
+const ele = <div class="ele">demo</div>;
+```  
+在经过babel的转换之后，其本质是调用了React.createElement方法创建了一个ReactElement对象，转码之后为:
+```javascript
+const ele = React.createElement(
+    'div',
+    {className: 'ele'},
+    'demo'
+);
+//返回的对象为:
+{
+    type: 'div',
+    props: {
+        className: 'ele',
+        children: 'demo'
+    }
+}
+```
+使用reactElement是因为这里实际上是一个虚拟dom与实际的dom有一些区别。在JSX中被花括号包围的语法会当做一个JS表达式来执行。
+- 渲染元素   
+在react中渲染一个reactDom需要调用ReactDom.render,例如渲染上面这个element:
+```javascript
+ReactDom.render(
+    ele,
+    document.getElementById('root')
+);
+```  
+这个方法接受两个参数,第一个参数是reactElement对象,第二个参数是需要挂在的dom对象.  
+- 组件和props  
+在react中有两种组件形式,一种是无状态组件,即函数组件,这种组件是一个函数,接受本组件需要的props对象,其内部没有任何状态,例如:
+```
+const function Demo(props){
+    return (
+        <h1>React</h1>
+        <p>demo{props.num}</p>
+    )
+}
+//在react中组件名首字母大写
+```  
+另外一种是class组件，这种组件继承自React.Compoent.封装了一些生命周期钩子函数,还有一些自有的方法：
+```
+class Demo extends React.Compoent {
+    render{
+        return (
+            <h1>React</h1>
+            <p>demo{this.props.num}</p>
+        )
+    }
+}
+```  
+生命周期钩子会在对应的生命周期被调用。与Vue类似，组件的props是只读的。在组件中修改其状态需要调用this.setState.这样React会监听到State的变化，才会更新dom.  
+setState的参数有两种形式,第一种是对象，传入的对象会与现有的state对象merged，另外一种是传入一个函数，这个函数接受两个参数，第一个参数是之前的state对象另外一个参数是props对象,例如:  
+```js
+this.setState((prevState, props) => {
+    count: prevState.count + props.count
+});
+```  
+- 向一个组件传入函数prop  
+在react中prop可以是一个函数，例如:  
+```
+class Demo extends React.Compoent{
+    constructor(props){
+        super(props);
+        this.state = {
+            count: 0
+        };
+        //这里必须要绑定传入函数的this
+        this.handleClick = this.handleClick.bind(this);
+    }
+    handleClick(){
+        this.setState({
+            count: 1
+        })
+    }
+    render(){
+        return (
+            <button onClick={this.handleClick}>
+            Click it!
+            </button>
+        );
+    }
+}
+```  
+
+
+
 ## XHR对象  
 # 第四周  
 ## Webpack的HMR浅析  
 ## gulp入门  
 ## html5API  
 ## 移动端REM布局  
-## less
+## less  
+# 第五周  
+
 
