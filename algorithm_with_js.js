@@ -29,3 +29,52 @@ let quickSortArray = [2,4,5,6,733,23,123,432,532,5,7,1];
 console.log('待排序数组:', quickSortArray);
 console.log('开始快速排序');
 console.log('排序结果:', quickSort(quickSortArray));
+
+
+
+/**
+ * 判断一个变量的类型
+ * 
+ * @param {String} type 需要判断的类型 
+ * @returns 判断某个类型的函数
+ */
+function isType(type) {
+    return function(obj) {
+        if(toString.call(obj) === `[object ${type}]`) return true
+        return false;
+    };
+}
+/**
+ * 递归判断两个对象是否相等
+ * 
+ * @param {Obejct} target 
+ * @param {Object} source 
+ * @returns Boolean
+ */
+function isObjectEqual(target, source) {
+    for (var key in target) {
+        if(typeof target[key] === 'object' && typeof source[key] === 'object') {
+            if(toString.call(target[key]) !== toString.call(source[key])) {
+                return false;
+            }
+            if(!isObjectEqual(target[key], source[key])) {
+                return false;
+            }
+        }else {
+            if(target[key] !== source[key]){
+                return false;
+            }
+        }
+    }
+    return true;
+}
+let target = {
+    1: {1:3,2:1},
+    2: 3
+};
+let source = {
+    1: {1:3,2:1},
+    2: 3
+};
+console.log(`验证是否相等`);
+console.log(isObjectEqual(target, source));
