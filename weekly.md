@@ -237,7 +237,7 @@ ReactDom.render(
 这个方法接受两个参数,第一个参数是reactElement对象,第二个参数是需要挂在的dom对象.  
 - 组件和props  
 在react中有两种组件形式,一种是无状态组件,即函数组件,这种组件是一个函数,接受本组件需要的props对象,其内部没有任何状态,例如:
-```
+```js
 const function Demo(props){
     return (
         <h1>React</h1>
@@ -247,7 +247,7 @@ const function Demo(props){
 //在react中组件名首字母大写
 ```  
 另外一种是class组件，这种组件继承自React.Compoent.封装了一些生命周期钩子函数,还有一些自有的方法：
-```
+```js
 class Demo extends React.Compoent {
     render{
         return (
@@ -266,7 +266,7 @@ this.setState((prevState, props) => {
 ```  
 - 向一个组件传入函数prop  
 在react中prop可以是一个函数，例如:  
-```
+```js
 class Demo extends React.Compoent{
     constructor(props){
         super(props);
@@ -290,7 +290,76 @@ class Demo extends React.Compoent{
     }
 }
 ```  
-
+- react-redux  
+在redux中只有一个store,且只有一个根state。与Vuex不同的是，vuex可以是多个store组成一个根store。在react-redux中，每个reducer可以看做是一个小的store，在初始化的时候可以定义initState来确定这个store的state结构，例如:
+```js
+import {UPDATE_LOADING} from './actions';
+const INIT_STATE = {
+    loading: false,
+    detail: {}
+};
+export default function(state = INIT_STATE, action) {
+    switch(action.type) {
+    case UPDATE_LOADING:
+        return Object.assign({}, state, {
+            loading: action.data
+        });
+    default: 
+        return Object.assign({}, state);
+    }
+}
+```
+每个reducer定义了不同action的具体操作。action可以定义actionCreator函数生成,在dispatch action的时候调用这个函数就可以生成有不同载荷的action  
+```js
+const UPDATE_LOADING = 'UPDATE_LOADING';
+export function updateLoading(data) {
+    return {
+        type: UPDATE_LOADING,
+        data
+    }    
+}
+// 当派发一个有载荷的action的时候:
+dispatch(updateLoading(false));
+//false这个数据就是action的载荷
+```
+在定义actionCreator函数的时候可以返回一个函数，在这个函数中就可以做一些异步操作(需要引入redux-thunk中间件),例如：
+```js
+const GET_DATA = 'GET_DATA';
+const UPDATE_DATA = 'UPDATE_DATA';
+const UPDATE_LOADING = 'UPDATE_LOADING';
+export function updateLoading(data) {
+    return {
+        type: UPDATE_LOADING,
+        data
+    }    
+}
+export function updateData(data) {
+    return {
+        type: UPDATE_DATA,
+        data
+    }
+} 
+export function getData(id) {
+    //这里返回一个函数，redux-thunk会向这个函数传入distach函数作为参、//数，也就是在这个函数中又可以dispatch另外的action
+    return function(dispatch) {
+        dispatch(updateLoading(true));
+        //改变loading状态之后开始异步取数据,这里调用封装的fetch方法
+        fetch('/api/detail', {
+            id
+        }).then(function(res) {
+            //成功取到数据,派发另外一个action来改变state
+            dispatch(updateData(res.data));
+            //fetch完毕，改变loading状态
+            dispatch(updateLoading(false));
+        }).catch(function(err) {
+            //数据获取失败
+            dispatch(updateLoading(false));
+            //做其他错误处理操作....
+        })
+        
+    }       
+}
+```
 
 
 ## XHR对象  
@@ -302,7 +371,9 @@ class Demo extends React.Compoent{
 ## 移动端REM布局  
 ## less  
 # 第五周  
-## letter-spacing 与 word-spacing
+## letter-spacing 与 word-spacing 
+## jsonp
+## 
 
 
 
