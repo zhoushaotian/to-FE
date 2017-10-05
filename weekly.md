@@ -407,9 +407,8 @@ xhrDemo.send({
 ## less  
 # 第五周  
 ## letter-spacing 与 word-spacing 
-## jsonp  
-
-## 
-
+## jsonp
+## formData
+## fileReader
 
 
