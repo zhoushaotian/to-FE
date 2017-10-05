@@ -363,6 +363,41 @@ export function getData(id) {
 
 
 ## XHR对象  
+- XHR请求的五种状态  
+
+枚举值|描述
+-|-
+0(未初始化)|对象以及建立但是还未调用open方法
+1(初始化)|已经调用open方法但是还未send
+2(发送数据)|send方法已经调用但是当前的状态和http头未知
+3(数据传送中)|已经接受**部分**数据
+4(完成)|数据接受完毕此时可以通过responseXml获取响应数据  
+- 完整的调用过程  
+```js
+const xhrDemo = new XMLHttpRequest();
+// 设置请求url以及method和参数
+xhrDemo.open('get', '/api/demo', true);
+// 绑定回调函数
+xhrDemo.onreadystatechange(function(){
+    //判断当前请求的状态和响应码
+    if(xhrDemo.readState === XMLHttpRequest.DONE && xhrDemo.status === 200) {
+        console.log('接受到数据:',xhrDemo.responseText);    
+    };
+});
+//发送请求
+xhrDemo.send();
+
+```  
+- get方法和post方法的参数  
+如果是get,参数则写到url参数,如果是post方法,参数在调用send方法时写入:
+```js
+xhrDemo.send({
+    id: '1'
+});
+```  
+
+
+
 
 # 第四周  
 ## Webpack的HMR浅析  
@@ -372,7 +407,8 @@ export function getData(id) {
 ## less  
 # 第五周  
 ## letter-spacing 与 word-spacing 
-## jsonp
+## jsonp  
+
 ## 
 
 
