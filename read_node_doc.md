@@ -1,4 +1,4 @@
-# node的模块机制  
+# node Module
 node的模块遵从commonJs规范，提供require函数用来加载一个模块。在node中一个文件等于一个模块，在载入文件执行之前会将原模块的code进行包装:
 ```js
 (function(exports, require, module, __filename, __dirname){
@@ -30,3 +30,18 @@ console.log('入口文件路径', require.main.filename);
 ## 模块的循环引用问题 
 当a模块require b模块,同时b模块require a模块的时候，会出现模块循环引用的问题，为了避免这种死循环，当出现循环引用的时候，require会直接返回还未完全赋值的module.exports
 ## [api](https://nodejs.org/dist/latest-v8.x/docs/api/modules.html#modules_the_module_scope)
+# node Events
+events模块是node中非常核心的一个模块，很多模块的实现都是基于这个模块(事件驱动的异步编程模式)。events模块对外暴露了一个类: Class EventEmitter.这个类实例的on方法可以注册一个事件的Listener,允许多个函数注册到同一个事件上.
+- 当eventEmitter emit一个事件之后 所有注册到这个事件上的函数会按注册的顺序**同步的**依次被调用,使用同步的方式去调用所有的Listener主要是为了避免一些竞争条件,可以使用process.nextTick或者setImmediate去异步调用:
+```js
+const myEmitter = new MyEmitter();
+myEmitter.on('event', (a, b) => {
+  setImmediate(() => {
+    console.log('this happens asynchronously');
+  });
+});
+myEmitter.emit('event', 'a', 'b');
+```
+- newListener see [api](https://nodejs.org/dist/latest-v8.x/docs/api/events.html#events_event_newlistener)
+
+
