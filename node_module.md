@@ -1,0 +1,32 @@
+# node的模块机制  
+node的模块遵从commonJs规范，提供require函数用来加载一个模块。在node中一个文件等于一个模块，在载入文件执行之前会将原模块的code进行包装:
+```js
+(function(exports, require, module, __filename, __dirname){
+    //your module code
+})
+```
+这种包装有两种好处:
+1. 提供了module, exports, require等变量,看起来就好像这几个变量是全局的，实际上这几个变量只是函数的局部变量
+2. 隔离了全局作用域，在模块中定义的变量不会污染到全局变量  
+## 模块标识符 
+载入一个模块需要调用require()方法，这个函数的参数就是模块标识符。在node中模块标识符分为三种:
+1. core module  
+核心模块是node自身提供的，这种模块的优先级最高.例如: path 模块
+2. 以./ ../开头的自定义模块  
+例如require('./a')
+3. 不以./ ../开头的非核心模块  
+例如通过npm安装的包: require('express');  
+关于模块的查找算法     
+(https://nodejs.org/dist/latest-v8.x/docs/api/modules.html#modules_all_together)  
+
+## 主模块  
+当一个文件是直接从node启动的,例如: node ./a.js 那么这个a文件会当做当前node进程的主模块，主模块和其他模块类似，只不过require.main会被赋值给modele,也就是说如果要判断某个模块是否是主模块可以通过:
+```js
+console.log(module === require.main);
+// true
+// 整个应用的入口文件也可以通过require.main拿到
+console.log('入口文件路径', require.main.filename);
+```  
+## 模块的循环引用问题 
+当a模块require b模块,同时b模块require a模块的时候，会出现模块循环引用的问题，为了避免这种死循环，当出现循环引用的时候，require会直接返回还未完全赋值的module.exports
+## [api](https://nodejs.org/dist/latest-v8.x/docs/api/modules.html#modules_the_module_scope)
