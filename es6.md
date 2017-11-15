@@ -21,4 +21,4 @@ const Person = Class{   //这是一个类表达式 声明了一个Person的类
 ```
 - Class语法不存在变量提升
 - 内部可以直接使用get和set关键字对某个属性设置存值函数和取值函数
-# Generator
+# Generator && Thunk && currying
