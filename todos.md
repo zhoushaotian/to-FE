@@ -8,6 +8,12 @@
 ### finish **Module** at 2017.11.7
 ### finish **Events** at 2017.11.8
 ## html5API
-## 学习mocha前端自动化测试 creatd at 2017.11.9
+## 学习mocha前端自动化测试 created at 2017.11.9
 ## deep in React && server-side render
 ## es6 class语法的继承实现
+## 深入学习handlebars created at 2017.11.15
+## 修改choice-cli 实现多模式共用一个模板文件 created at 2017.11.15
+- react模式
+- vue模式
+- node模式
+- simple模式(无其他框架结构)
