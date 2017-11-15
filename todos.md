@@ -10,7 +10,11 @@
 ## html5API
 ## 学习mocha前端自动化测试 created at 2017.11.9
 ## deep in React && server-side render
-## es6 class语法的继承实现
+## es6 created at 2017.11.15 
+- class语法的继承实现
+- Generator函数
+- async函数
+- arrayBuffer
 ## 深入学习handlebars created at 2017.11.15
 ## 修改choice-cli 实现多模式共用一个模板文件 created at 2017.11.15
 - react模式
