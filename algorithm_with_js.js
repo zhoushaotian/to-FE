@@ -78,3 +78,55 @@ let source = {
 };
 console.log(`验证是否相等`);
 console.log(isObjectEqual(target, source));
+
+/**
+ * 堆排序
+ * 
+ * @param {Array} arr 待排序数组 
+ */
+function heapSort(arr) {
+    function swap(arr, src, tar){
+        let temp = arr[src];
+        arr[src] = arr[tar];
+        arr[tar] = temp;
+    }
+    function heap(arr, index, size) {
+        let max,left,right;
+        while(true) {
+            max = index;
+            left = 2*max + 1;
+            right = 2*(max + 1);
+            if(left < size && arr[index] < arr[left]) {
+                max = left;
+            }
+            if(right < size && arr[max] < arr[right]) {
+                max = right;
+            }
+            if(max !== index){
+                swap(arr, max, index);
+                index = max;
+            }else{
+                break;
+            }
+        }
+    }
+    function buildHeap(arr) {
+        let parent = Math.floor(arr.length / 2) - 1;
+        for(let i = parent; i>=0; i--) {
+            heap(arr, i, arr.length);
+        }
+    }
+    // 开始排序
+    // 先将数组初始化为最大堆
+    buildHeap(arr);
+    console.log('创建堆', arr.toString());
+    // 交换堆顶和最后一个元素的位置 再调整堆
+    for(let i = arr.length-1; i>0; i--) {
+        swap(arr, 0, i);
+        heap(arr, 0, i);
+    }
+    console.log(arr.toString());
+}
+let arr = [2,4,25,64,32,12,1,4,5];
+console.log('堆排序',arr.toString());
+heapSort(arr);
