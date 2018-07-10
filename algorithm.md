@@ -106,3 +106,60 @@ function headInsert(headNode) {
     return newHead;
 }
 ```
+## 4. 重建二叉树
+### 描述
+根据二叉树的前序遍历和中序遍历的结果，重建出该二叉树。假设输入的前序遍历和中序遍历的结果中都不含重复的数字。
+```
+preorder = [3,9,20,15,7]
+inorder =  [9,3,15,20,7]
+```
+### 解
+前序遍历的第一个元素总是二叉树的根节点，而根据这个根节点在中序遍历的数组中可以将二叉树的左右子树找出，然后递归这个过程，直到遍历完整个数组
+```js
+/**
+ * preL: 当前子树在前序遍历中的起始位置
+ * preR: 当前子树在前序遍历中的结束位置
+ * inL: 当前子树在中序遍历中的起始位置
+ * inR: 当前子树在中序遍历中的结束位置
+ * */
+function rebuildTree(inorder, preorder, preL, preR, inL, inR) {
+    if(preL > preR) { // 当前序遍历数组中左子树根节点的索引大于右子树的索引则遍历结束
+        return null;
+    }
+    let curNode = {
+        value: preorder[preL],
+        left: null,
+        right: null
+    }
+    let rootIndex = inorder.indexOf(preorder[preL]); // 找出根元素在中序遍历数组中的索引
+    let curTreeArr = rootIndex - inL; // 当前左子树的长度
+    curNode.left = rebuildTree(inorder, preorder, preL + 1, preL + curTreeArr, inL, inL + curTreeArr - 1);
+    curNode.right = rebuildTree(inorder, preorder, preL + curTreeArr + 1, preR, inL + curTreeArr + 1, inR);
+    return curNode;
+}
+```
+## 5.二叉树的下一个节点
+### 描述
+给定一个二叉树和其中的一个结点，请找出中序遍历顺序的下一个结点并且返回。注意，树中的结点不仅包含左右子结点，同时包含指向父结点的指针。
+### 解
+```js
+/**
+此节点存在两种情况，第一种情况，当该节点的右子树为空的时候，那么在中序遍历中该节点的下一节点则为第一个左连接指向该节点的父节点，第二种情况，当此节点的右子树不为空，那么该节点的下一节点则为右子树的最左节点
+*/
+function findInorderNextNode(targetNode, head) {
+    if(targetNode.right === null) { // 右子树为空 
+        while(targetNode.parent !== null) {
+            let parentNode = targetNode.parent;
+            if(parentNode.left === targerNode) {
+                return parentNode;
+            }
+            targetNode = targetNode.parent;
+        }
+    }else {
+        while(targetNode.left !== null) {
+            targetNode = targerNode.left;
+        }
+        return targetNode;
+    }
+}
+```
