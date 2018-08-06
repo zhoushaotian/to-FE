@@ -62,3 +62,40 @@ const HOCDemo = HOC(Demo);
 typeof HOCDemo.staticFunc // undefined
 ```
 对此，hoist-non-react-statics会来帮你自动处理，它会自动拷贝所有非React的静态方法。
+## Refs
+在React中虽然是单向数据流(由父组件向子组件传递值和数据)，但是有些特殊的场景需要我们直接从父组件调用子组件的方法。这个时候就需要拿到子组件的实例。
+Ref属性提供这个机制，在16.4版本之前我们调用ref有两种方式
+```jsx
+class demo extends Compoents{
+    render() {
+        componetDidMount() {
+            console.log(this.refs.myInput); // 使用字符串
+        }
+        return (
+            <div>
+                {/**1.使用函数*/}
+                <input ref={(input) => {this.$input = input;}}/>
+                <input ref="myInput"/>
+            </div>
+        )
+    }
+}
+// 16.4版本之后我们使用createRefs来拿到子组件实例
+class demo extends Compoents{
+    render() {
+        constructor(props) {
+            this.input = React.createRef();
+        }
+        componetDidMount() {
+            this.input.current.focus() // 调用 
+        }
+        return (
+            <div>
+                {/**1.使用函数*/}
+                <input ref={this.input}/>
+            </div>
+        )
+    }
+}
+```
+

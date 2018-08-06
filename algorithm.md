@@ -163,3 +163,22 @@ function findInorderNextNode(targetNode, head) {
     }
 }
 ```
+## 6.青蛙跳台阶
+### 描述
+一只青蛙一次可以跳上 1 级台阶，也可以跳上 2 级。求该青蛙跳上一个 n 级的台阶总共有多少种跳法。
+### 解
+当n=1的时候有1种跳法，n=2的时候有两种跳法，n=3的时候有三种。依次类推，相当于第n阶的跳法等于n-1的跳法加上n-2的跳法。
+```js
+function resolveJump(n) {
+    if(n === 1) {
+        return 1;
+    }
+    let arr = [];
+    arr[0] = 1;
+    arr[1] = 2;
+    for(let i = 2; i <= n; i++) {
+        arr[i] = arr[i - 1] + arr[i - 2];
+    }
+    return arr[n - 1];
+}
+```
