@@ -182,3 +182,32 @@ function resolveJump(n) {
     return arr[n - 1];
 }
 ```
+
+## 7.记忆斐波那契数列
+### 描述
+斐波那契数列指的是类似于以下的数列：
+1, 1, 2, 3, 5, 8, 13, ....
+也就是，第 n 个数由数列的前两个相加而来：f(n) = f(n - 1) + f(n -2)
+请你完成 fibonacci 函数，接受 n 作为参数，可以获取数列中第 n 个数，例如：
+fibonacci(1) // => 1
+fibonacci(2) // => 1
+fibonacci(3) // => 2
+...
+测试程序会从按顺序依次获取斐波那契数列中的数，请注意程序不要超时，也不要添加额外的全局变量。
+本题来源：《JavaScript 语言精髓》
+### 解
+利用闭包保存之前计算过的数据
+```js
+const fibonacci = (() => {
+  let f = [1,1,2];
+  return cac;
+  function cac(n) {
+    if(f[n - 1]){
+      return f[n-1];
+    }
+    let result = cac(n - 1) + cac(n - 2);
+    f[n - 1] = result;
+    return result;
+  }
+})()
+```
