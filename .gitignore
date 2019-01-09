@@ -1,5 +1,6 @@
 # file
 test.js
+.DS_Store
 # folder
 .vscode/
 test/
