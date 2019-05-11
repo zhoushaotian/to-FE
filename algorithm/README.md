@@ -211,3 +211,48 @@ const fibonacci = (() => {
   }
 })()
 ```
+## 8.给定数组中子序列的最大和
+### 描述
+给定一个数组，求该数组中子序列的最大和。例如
+```js
+// 给定数组
+const arr = [1,2,3,-1];
+maxSum(arr) // 值为6
+```
+### 解
+1. 暴力法  
+遍历所有子序列，找出最大的和，时间复杂度为O(n^2)  
+```js
+function maxSum(arr) {
+    let maxSum = arr[0];
+    for(let i = 0; i < arr.length; i++) {
+        let curSum = 0;
+        for(let j = i; j < arr.length; j++) {
+            curSum += arr[j];
+            if(curSum >= maxSum) {
+                maxSum = curSum;
+            }
+            
+        }
+    }
+}
+```  
+2. 数组规律
+观察数组规律，发现最大和有两种情况，若数组全部是负数则最大和为其中最大的元素，若数组有正有负，那么最大和一定是大于0 的。遍历数组时开始累加每一个元素，当累加和小于0的时候重新设置累加和为当前元素，每次都比较当前和的大小。
+```js
+function maxSum2(arr) {
+    let maxSum = Number.MIN_SAFE_INTEGER;
+    let curSum = 0;
+    for(let i = 0; i < arr.length; i++) {
+        if(curSum <= 0) {  // 如果当前和小于等于0 就重新设置当前和为当前元素
+            curSum = arr[i];
+        }else {
+            curSum += arr[i];  // 否则累加
+        }
+        if(curSum > maxSum) { // 记录当前最大的和
+            maxSum = curSum;
+        }
+    }
+    return maxSum;
+}
+```
