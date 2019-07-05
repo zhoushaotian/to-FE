@@ -2,6 +2,7 @@
 test.js
 .DS_Store
 package-lock.json
+package.json
 # folder
 .vscode/
 test/
