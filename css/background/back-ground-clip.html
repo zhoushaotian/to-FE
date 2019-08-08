@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .box{
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            margin-bottom: 100px;
+            border: 10px dotted black;
+            padding: 10px;
+        }
+        .border-box{
+            background-clip: border-box
+        }
+        .content-box{
+            background-clip: content-box;
+        }
+        .padding-box{
+            background-clip: padding-box;
+        }
+    </style>
+</head>
+<body>
+    <h1>background-clip设置背景的延伸区域</h1>
+    <h2>border-box</h2>
+    <div class="box border-box">
+    </div>
+    <h2>content-box</h2>
+    <div class="box content-box">
+        </div>
+        <h2>padding-box</h2>
+        <div class="box padding-box">
+            </div>
+</body>
+</html>

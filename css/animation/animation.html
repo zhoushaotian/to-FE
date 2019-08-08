@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        @keyframes demo{
+            0%{
+                top: 0;
+                left: 1px;
+                background-color: red;
+            }
+            50%{
+                left: 50px;
+            }
+            100%{
+                top: 100px;
+                left: 100px;
+                background-color: white;
+                border-radius: 50%
+            }
+        }
+        .demo{
+            position: relative;
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            animation: demo 2s linear 0s infinite;
+            /* 关键帧名称 动画周期持续时间 动画执行函数 应用动画前延迟时间  动画执行次数 */
+        }
+    </style>
+</head>
+<body>
+    <div class="demo">
+    </div>
+</body>
+</html>
